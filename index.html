@@ -4,59 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DOM Manipulation Example</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-      background-color: #f4f4f9;
-    }
-
-    .card-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .card {
-      width: 300px;
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 1.2em;
-    }
-
-    .card p {
-      font-size: 0.9em;
-      color: #555;
-    }
-
-    .button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="card-container">
@@ -75,62 +23,7 @@
     </div>
   </div>
 
-  <script>
-    // Fetch Advice API data
-    async function fetchAdvice() {
-      try {
-        const response = await fetch("https://api.adviceslip.com/advice");
-        if (!response.ok) {
-          throw new Error("Failed to fetch advice.");
-        }
-        const data = await response.json();
-        displayAdvice(data.slip);
-      } catch (error) {
-        console.error("Error fetching advice:", error);
-        document.getElementById("adviceText").textContent = "Failed to fetch advice. Try again!";
-      }
-    }
-
-    function displayAdvice(advice) {
-      const adviceText = document.getElementById("adviceText");
-      adviceText.textContent = `"${advice.advice}"`;
-    }
-
-    // Fetch Quote API data
-    async function fetchQuote() {
-      try {
-        const response = await fetch("http://api.quotable.io/random");
-        if (!response.ok) {
-          throw new Error("Failed to fetch quote.");
-        }
-        const data = await response.json();
-        displayQuote(data);
-      } catch (error) {
-        console.error("Error fetching quote:", error);
-        document.getElementById("quoteText").textContent = "Failed to fetch quote. Try again!";
-      }
-    }
-
-    function displayQuote(quote) {
-      const quoteText = document.getElementById("quoteText");
-      const quoteAuthor = document.getElementById("quoteAuthor");
-      quoteText.textContent = `"${quote.content}"`;
-      quoteAuthor.textContent = `— ${quote.author}`;
-    }
-
-    // Automatically fetch new quotes every 10 seconds
-    function startQuoteUpdates() {
-      fetchQuote(); // Fetch the first quote immediately
-      setInterval(fetchQuote, 15000); // Fetch a new quote every 10 seconds
-    }
-
-    // Initialize the page
-    function main() {
-      fetchAdvice(); // Fetch initial advice
-      startQuoteUpdates(); // Start fetching quotes
-    }
-
-    main();
-  </script>
+  <!-- Link to the external JavaScript file -->
+  <script src="index.js"></script>
 </body>
 </html>
