@@ -40,114 +40,52 @@
       font-size: 0.9em;
       color: #555;
     }
+
+    .button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #8e794c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #bb9c58;
+    }
   </style>
 </head>
 <body>
   <div class="card-container">
-    <div class="card" id="card1">
-      <h3>Card 1</h3>
-      <p>This is the first card.</p>
-    </div>
-    <div class="card" id="card2">
-      <h3>Card 2</h3>
-      <p>This is the second card.</p>
-    </div>
-    <div class="card" id="card3">
-      <h3>Card 3</h3>
-      <p>This is the third card.</p>
+    <div class="card" id="adviceCard">
+      <h3>Random Advice</h3>
+      <p id="adviceText">Click the button to get advice.</p>
+      <button class="button" onclick="fetchAdvice()">Get Advice</button>
     </div>
   </div>
 
   <script>
-    // Fetch GBIF API data for Card 1
-    async function getGBIFInfo() {
+    // Function to fetch advice from the API
+    async function fetchAdvice() {
       try {
-        const response = await fetch("https://api.gbif.org/v1/species/17");
+        const response = await fetch("https://api.adviceslip.com/advice");
+        if (!response.ok) {
+          throw new Error("Failed to fetch advice.");
+        }
         const data = await response.json();
-        displayGBIFData(data);
+        displayAdvice(data.slip);
       } catch (error) {
-        console.error("Error fetching GBIF data:", error);
+        console.error("Error fetching advice:", error);
+        document.getElementById("adviceText").textContent = "Failed to fetch advice. Try again!";
       }
     }
 
-    function displayGBIFData(data) {
-      const card1 = document.getElementById("card1");
-      if (data) {
-        card1.innerHTML = `
-          <h3>${data.scientificName}</h3>
-          <p>Kingdom: ${data.kingdom}</p>
-          <p>Phylum: ${data.phylum}</p>
-          <p>Class: ${data.class}</p>
-          <p>Order: ${data.order}</p>
-          <p>Family: ${data.family}</p>
-          <p>Genus: ${data.genus}</p>
-        `;
-      } else {
-        card1.innerHTML = `<p>No data available</p>`;
-      }
+    // Function to display the fetched advice
+    function displayAdvice(advice) {
+      const adviceText = document.getElementById("adviceText");
+      adviceText.textContent = `"${advice.advice}"`;
     }
-
-    // Fetch PokeAPI data for Card 2
-    async function getPokemonInfo() {
-      try {
-        const response = await fetch("https://pokeapi.co/api/v2/pokemon/ditto");
-        const data = await response.json();
-        displayPokemonData(data);
-      } catch (error) {
-        console.error("Error fetching Pokemon data:", error);
-      }
-    }
-
-    function displayPokemonData(data) {
-      const card2 = document.getElementById("card2");
-      if (data) {
-        card2.innerHTML = `
-          <h3>${data.name.toUpperCase()}</h3>
-          <p>Base Experience: ${data.base_experience}</p>
-          <p>Height: ${data.height}</p>
-          <p>Weight: ${data.weight}</p>
-          <p>Abilities:</p>
-          <ul>
-            ${data.abilities.map(ability => `<li>${ability.ability.name}</li>`).join("")}
-          </ul>
-        `;
-      } else {
-        card2.innerHTML = `<p>No data available</p>`;
-      }
-    }
-
-    async function getChuckInfo() {
-      try {
-        const response = await fetch("https://api.chucknorris.io/jokes/random");
-        const data = await response.json();
-        displayChuckData(data);
-      } catch (error) {
-        console.error("Error fetching Chuck Norris data:", error);
-      }
-     }
-    
-     function displayChuckData(data) {
-      const card2 = document.getElementById("card3");
-      if (data) {
-        card2.innerHTML = `
-          <h3>Chuck Norris Joke</h3>
-          <p>${data.value}</p>
-        `;
-      } else {
-        card2.innerHTML = `<p>No joke available</p>`;
-      }
-    }
-
-
-
-    // Main function to fetch data for both cards
-    function main() {
-      getGBIFInfo(); // Fetch GBIF data for Card 1
-      getPokemonInfo(); // Fetch PokeAPI data for Card 2
-      getChuckInfo();
-    }
-
-    main(); // Start the fetching process
   </script>
 </body>
 </html>
