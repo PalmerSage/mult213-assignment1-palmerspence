@@ -1,16 +1,8 @@
-// fetch('https://jsonplaceholder.typicode.com/posts')
-//   .then(response => response.json())
-//   .then(data => console.log(data))
-//   .catch(error => console.error('Error:', error))
 
-// fetch('https://restcountries.com/v3.1/name/united')
-//   .then(response => response.json())
-//   .then(data => console.log(data))
-//   .catch(error => console.error('Error:', error))
 // Fetch Advice API data
 async function fetchAdvice() {
     try {
-      const response = await fetch("http://api.adviceslip.com/advice");
+      const response = await fetch("https://api.adviceslip.com/advice");
       if (!response.ok) {
         throw new Error("Failed to fetch advice.");
       }
@@ -21,7 +13,7 @@ async function fetchAdvice() {
       document.getElementById("adviceText").textContent = "Failed to fetch advice. Try again!";
     }
   }
-  
+  // Updates the DOM to display the fetched piece of advice.
   function displayAdvice(advice) {
     const adviceText = document.getElementById("adviceText");
     adviceText.textContent = `"${advice.advice}"`;
@@ -32,16 +24,16 @@ async function fetchAdvice() {
     try {
       const response = await fetch("http://api.quotable.io/random");
       if (!response.ok) {
-        throw new Error("Failed to fetch quote.");
+        throw new Error("Failed to fetch quote. Two eyes, one mouth");
       }
       const data = await response.json();
       displayQuote(data);
     } catch (error) {
       console.error("Error fetching quote:", error);
-      document.getElementById("quoteText").textContent = "Failed to fetch quote. Try again!";
+      document.getElementById("quoteText").textContent = "Failed to fetch quote. Enjoy the Silence for a Moment!";
     }
   }
-  
+  // Updates the DOM to display the fetched quote and its author.
   function displayQuote(quote) {
     const quoteText = document.getElementById("quoteText");
     const quoteAuthor = document.getElementById("quoteAuthor");
@@ -49,11 +41,12 @@ async function fetchAdvice() {
     quoteAuthor.textContent = `— ${quote.author}`;
   }
   
-  // Automatically fetch new quotes every 10 seconds
-  function startQuoteUpdates() {
+  // Automatically fetch new quotes every 10 seconds and just to show I can create and use an arrow function correctly
+  const startQuoteUpdates = () => {
     fetchQuote(); // Fetch the first quote immediately
     setInterval(fetchQuote, 10000); // Fetch a new quote every 10 seconds
-  }
+  };
+  
   
   // Initialize the page
   function main() {
@@ -62,6 +55,3 @@ async function fetchAdvice() {
   }
   
   main();
-  // fetch('http://dog-api.kinduff.com')
-//   .then(data => console.log(data))
-//   .catch(error => console.error('Error:', error))
